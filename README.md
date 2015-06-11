@@ -100,3 +100,8 @@ define i32 @main() {   ; i32()*
 
 일반적으로 모듈은 global value의 리스트로 구성되어있습니다 (여기서 function과 global variable을 global value로 간주합니다).
 글로벌 value는 특정 memory location에 대한 포인터로 표현되고 (여기서는 char 배열에 대한 포인터, 함수에 대한 포인터), 다음과 같은 linkage types를 가집니다.
+
+
+
+
+[LLVM Language Reference Manual]:http://llvm.org/docs/LangRef.html
