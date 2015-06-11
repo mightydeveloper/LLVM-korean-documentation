@@ -104,34 +104,34 @@ define i32 @main() {   ; i32()*
 ### Linkage Types
 모든 글로벌 변수들과 함수들은 다음과 같은 linkage type들 중 하나이어야 합니다. 
 
-*private* <br>
+**private** <br>
 "private" linkage를 갖는 Global value는 현재 모듈의 있는 object를 통해서만 직접적으로 접근할 수 있습니다. 특별히, private global value을 갖는 모듈에 대한 linking code는 private이 collision을 피하기 위해 rename되어야 할 수 있습니다. symbol이 모듈에 대하여 private하기 때문에, 모든 reference는 업데이트될 수 있습니다. 이것은 object file의 symbol table에는 나타나지 않습니다.
 
-*internal* <br>
+**internal** <br>
 private과 비슷하지만, value는 object file에서 local symbol로 나타납니다. (ELF의 경우 STB_LOCAL). 이것은 C 의 static 개념과 일치합니다. 
 
-*available_externally* <br>
+**available_externally** <br>
 "available_externally" linkage를 갖는 global들은 LLVM 모듈에 해당하는 object file로 절대 방출되지 않습니다. 이들은 inlining이나 global의 정의가 주어졌을때 다른 optimization을 하기 위해 존재합니다(모듈 밖에서). available_externally 를 갖는 global들은 마음대로 버려질수 있고, 아니면 linkonce_odr과 동일합니다. 이 linkage type은 definition에서만 허용되고, declaration에서는 허용되지 않습니다.
 
-*linkonce* <br>
+**linkonce** <br>
 "linkonce" linkage는 linkage가 일어날 때 같은 이름을 갖는 다른 global들과 합쳐집니다. 이것은 inline function, template들, 아니면 그것을 이용하는 translation unit마다 생성한 다른 코드로 사용될 수 있지만 body가 더 최종적인 정의로 overridden 될 수 있습니다. Unreferenced linkage global들은 폐기될 수 있습니다. 여기서 linkonce linkage는 optimizer를 통해 function의 body를 caller들로 inline하는걸 사실 허용하지 않습니다. 왜냐하면 그 함수에 대한 정의가 프로그램에서 확정적인 정의인지 나중에 더 강한 정의로 overridden 될 수 있을지 모르기 때문입니다. inlining과 다른 optimization을 사용하고 싶으면, "linkonce_odr" linkage를 사용하세요.
 
-*weak* <br>
+**weak** <br>
 "weak" linkage는 "linkonce linkage"와 같은 semantics지만, weak linkage로 된 unreferenced globals들은 폐기되지 않을 수 있습니다. 이것은 C 소스코드에서 "weak"로 선언된 global에 사용됩니다.
 
-*common* <br>
+**common** <br>
 "common" linkage는 "weak" linkage와 제일 비슷합니다. 하지만 이것은 C의 잠정적인(tentative) 정의에 쓰입니다. 예를들면 글로벌 scope 에서의 "int X;" 가 있습니다. "common" linkage를 갖는 symbol들은 weak symbols와 비슷하게 merge되고, unreferenced 되는 경우 지워질 수 없습니다. common symbol들은 explicit한 section이 없을 수 있지만, 반드시 zero initializer가 있어야하고, 'constant'로 mark가 되면 안됩니다. 함수들과 aliases들은 common linkage를 가지지 않을 수 있습니다.
 
-*appending* <br>
+**appending** <br>
 "appending" linkage는 배열type에 대한 포인터인 global variable에만 쓰일 수 있습니다. 만약 appending linkage를 갖는 두개의 global variable이 link가 된다면, 두개의 글로벌 배열이 서로 append됩니다. 이게 LLVM의 typesafe이고 .o file들이이 link되었을때  같은 이름을 갖는 "sections"를 append 하는 system linker 랑 동등합니다.
 
-*extern_weak* <br>
+**extern_weak** <br>
 이 linkage의 semantic은 ELF object file model을 따릅니다 : symbol이 link되기 전까지는 weak 이고, link되지 않았을 경우 symbol은 undefined reference가 되지 않고 그냥 null 이 됩니다.
 
-*linkonce_odr, weak_odr* <br>
+**linkonce_odr, weak_odr** <br>
 어떤 언어에서는 다른 글로벌들을 merge시키기도 합니다. 예를들어 두개의 다른 semantic를 갖는 함수가 있습니다. 다른 언어들은, 예를 들어 C++같은 경우, 동등한 globals만 merge가 되도록 확인합니다.  ("단일 정의 규칙 : one definition rule — “ODR”"). 다른 언어들은 linkonce_odr와 weak_odr linkage type을 써서 global 들이 꼭 동등한 글로벌에 merge가 되도록 명시해줍니다. 이 linkage types들은 다른 부분에서는 odr를 뺀 버전과 동일합니다.
 
-*external* <br>
+**external** <br>
 위의 identifier들을 사용하지 않았을 경우, 글로벌은 외부에서 보여지며, 이는 linkage에 참여하는걸 의미하고 external symbol reference를 resolve하는데에 쓰일 수 있습니다.
 
 함수 선언이 external 이나 extern_weak 가 아닌 linkage type을 가질 수 없습니다.
