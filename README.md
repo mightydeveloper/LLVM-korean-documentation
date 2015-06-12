@@ -42,7 +42,7 @@ LLVM 식별자(identifier)는 두가지 종류가 있습니다 : 글로벌, 로�
 글로벌 식별자 (함수, 전역 변수) 는 '@' 문자로 시작합니다. <br>
 로컬 식별자는 (레지스터 이름, 타입) 은 '%' 문자로 시작합니다. <br>
 추가적으로, 다음과 같은 3가지 다른 포멧의 식별자가 존재합니다. <br>
-1. named values들은 prefix를 사용하여 표현합니다. 예를들면,  %foo, @DivisionByZero, %a.really.long.identifier 와 같이 표현할 수 있습니다. 여기에 사용되는 실제 정규표현식은 ‘[%@][-a-zA-Z$._][-a-zA-Z$._0-9]*‘입니다. 이름을 다른 문자열을 쓰는 경우 quote를 양쪽에 씌워주어야 합니다. Special character를 쓰는 경우, xx에 ASCII code의 16진수 값을 넣어 "\xx" 와 같은 방식으로 씁니다. 이렇게 쓰면 어떠한 문자도 name value로 쓸 수 있습니다. quote 자체도 쓸 수 있습니다. "\01" prefix를 쓰면 글로벌 variable의 mangling을 방지할 수도 있습니다.
+1. named values들은 prefix를 사용하여 표현합니다. 예를들면,  %foo, @DivisionByZero, %a.really.long.identifier 와 같이 표현할 수 있습니다. 여기에 사용되는 실제 정규표현식은 ‘[%@][-a-zA-Z$._][-a-zA-Z$._0-9]*‘입니다. 이름에 다른 문자열을 쓰는 경우 quote를 양쪽에 씌워주어야 합니다. Special character를 쓰는 경우, xx에 ASCII code의 16진수 값을 넣어 "\xx" 와 같은 방식으로 씁니다. 이렇게 쓰면 어떠한 문자도 name value로 쓸 수 있습니다. quote 자체도 쓸 수 있습니다. "\01" prefix를 쓰면 글로벌 variable의 mangling을 방지할 수도 있습니다.
 2. Unnamed values들은 prefix가 있는 unsigned numeric value로 표현할 수 있습니다. 예를들면, %12, @2, %44 가 있습니다.
 3. 상수(Constants)는 constants 섹션에서 따로 설명하겠습니다.
 
