@@ -67,6 +67,7 @@ Strength reduction을 하면 :
 %result = add i32 %1, %1
 ```
 이 마지막 방법에서는 몇가지 중요한 LLVM 의 Lexical feature들이 있습니다.
+
 1. Comment 는 ; 를 통해 라인 끝에 쓰여집니다.
 2. named value에 쓰여지지 않는 경우 Unnamed temporary들이 생깁니다.
 3. Unnamed temporary들은 순서대로 넘버링 됩니다.(per-function 카운터를 이용하여 0부터 시작합니다.) 여기서 주의할점은 basic block들이랑 unnamed function parameter들도 이 넘버링에 포함이 됩니다. 예를들어, entry basic block이 lobel name이 주어지지 않고 모든 function parameter에는 name이 주어졌으면, 숫자 0이 할당됩니다.
